@@ -2,7 +2,7 @@ package com.example.scheduleit.auth
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
@@ -38,7 +38,7 @@ fun RegisterScreen(
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(text = "Create account", style = MaterialTheme.typography.h5)
+        Text(text = "Create account", style = MaterialTheme.typography.headlineSmall)
 
         OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
         OutlinedTextField(value = pwd, onValueChange = { pwd = it }, label = { Text("Password") })
@@ -58,13 +58,12 @@ fun RegisterScreen(
         when (state) {
             is AuthState.Error -> Text(
                 (state as AuthState.Error).message,
-                color = MaterialTheme.colors.error
+                color = MaterialTheme.colorScheme.error
             )
             AuthState.Loading -> CircularProgressIndicator()
             else -> {}
         }
 
-        // Navigation side effect for success
         LaunchedEffect(key1 = state) {
             if (state is AuthState.Success) {
                 onRegistered()
@@ -73,7 +72,6 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Bottom text with clickable "Log in here"
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -81,13 +79,13 @@ fun RegisterScreen(
             Text(text = "Already have an account? ")
             Text(
                 text = "Log in here",
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable {
                     navController.navigate("login") {
                         popUpTo("register") { inclusive = true }
                     }
                 },
-                style = MaterialTheme.typography.body2.copy(textDecoration = TextDecoration.Underline)
+                style = MaterialTheme.typography.bodySmall.copy(textDecoration = TextDecoration.Underline)
             )
         }
     }

@@ -5,12 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ShowChart
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Group
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.automirrored.filled.ShowChart
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,28 +30,52 @@ fun MindfulnessScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
-        Text("Mindfulness", fontSize = 28.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = "Mindfulness",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button(onClick = {}) { Text("View date") }
-            Button(onClick = {}) { Text("Tasks") }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Button(onClick = { navController.navigate("calendar") }) {
+                Text("View date")
+            }
+            Button(onClick = { navController.navigate("tasks") }) {
+                Text("Tasks")
+            }
             Spacer(modifier = Modifier.weight(1f))
-            Icon(Icons.Default.AccountCircle, contentDescription = null)
-            Icon(Icons.Default.Group, contentDescription = null)
+            Icon(
+                imageVector = Icons.Filled.AccountCircle,
+                contentDescription = "Profile",
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Icon(
+                imageVector = Icons.Filled.Group,
+                contentDescription = "Group",
+                tint = MaterialTheme.colorScheme.onBackground
+            )
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.weight(1f)
+        ) {
             items(viewModel.mindfulnessItems.size) { index ->
                 val item = viewModel.mindfulnessItems[index]
                 Card(
-                    backgroundColor = Color(0xFFF1F1F1),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF1F1F1)),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -58,9 +83,16 @@ fun MindfulnessScreen(
                         .clickable { viewModel.toggleExpanded(index) }
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
-                        Text(item.title, fontWeight = FontWeight.SemiBold)
+                        Text(
+                            text = item.title,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
                         if (item.expanded) {
-                            Text("Details for ${item.title}", color = Color.Gray)
+                            Text(
+                                text = "Details for ${item.title}",
+                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                            )
                         }
                     }
                 }
@@ -69,21 +101,10 @@ fun MindfulnessScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {}, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Text("Time spent on meditating")
-        }
-
-        Icon(
-            Icons.AutoMirrored.Filled.ShowChart,
-            contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .size(64.dp)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(onClick = {}, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+        Button(
+            onClick = { navController.navigate("ai") },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
             Text("AI")
         }
 

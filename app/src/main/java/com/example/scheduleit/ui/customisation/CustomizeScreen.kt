@@ -3,8 +3,8 @@ package com.example.scheduleit.ui.customisation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -41,37 +41,51 @@ fun CustomizeScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Customize", style = MaterialTheme.typography.h6)
+        Text("Customize", style = MaterialTheme.typography.headlineSmall)
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = viewModel.email,
             onValueChange = viewModel::updateEmail,
             label = { Text("Edit profile") },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Button(onClick = onNavigateToResetPassword) {
+            Button(
+                onClick = onNavigateToResetPassword,
+                modifier = Modifier.weight(1f)
+            ) {
                 Text("Reset password")
             }
-            Button(onClick = onNavigateToDeleteAccount) {
+            Button(
+                onClick = onNavigateToDeleteAccount,
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = MaterialTheme.colorScheme.onError
+                )
+            ) {
                 Text("Delete account")
             }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        Text("Change color")
+        Text("Change color", style = MaterialTheme.typography.titleMedium)
+        Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .background(viewModel.selectedColor)
+                .background(viewModel.selectedColor, shape = MaterialTheme.shapes.small)
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -82,6 +96,8 @@ fun CustomizeScreen(
         ) {
             Text("AI")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         BottomNavigationBar(
             onCustomizeClick = {},

@@ -3,8 +3,8 @@ package com.example.scheduleit
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,7 +15,7 @@ import com.example.scheduleit.ui.navigation.ScheduleItNavHost
 import com.example.scheduleit.ui.navigation.ScheduleItTopAppBar
 
 @RequiresApi(Build.VERSION_CODES.O)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ScheduleItApp(
     repository: ScheduleItRepository,

@@ -2,10 +2,16 @@ package com.example.scheduleit.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ColumnInfo
+import androidx.room.Index
+import androidx.room.TypeConverters
+import com.example.scheduleit.data.converter.DateTimeConverters
 import java.util.Date
 
-@Entity(tableName = "task")
+@Entity(
+    tableName = "task",
+    indices = [Index(value = ["userId"])]
+)
+@TypeConverters(DateTimeConverters::class)
 data class Task(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
@@ -15,5 +21,5 @@ data class Task(
     val status: String,
     val category: String,
     val priority: Int,
-    @ColumnInfo(index = true) val userId: Int
+    val userId: Int
 )

@@ -3,10 +3,9 @@ package com.example.scheduleit.ui.task_history
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -14,7 +13,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.scheduleit.ui.components.CompletedTaskCard
 import com.example.scheduleit.ui.components.DeleteAlert
 import com.example.scheduleit.ui.navigation.BottomNavigationBar
-
 
 object ScheduleItHistoryDestination {
     const val route = "task_history"
@@ -31,9 +29,12 @@ fun TaskHistoryScreen(
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
 
-    if (state.confirmDelete) {
-        Toast.makeText(context, "Task deleted successfully!", Toast.LENGTH_SHORT).show()
-        viewModel.denyDeletion()
+    // Show toast when task deleted (only once per deletion)
+    LaunchedEffect(state.confirmDelete) {
+        if (state.confirmDelete) {
+            Toast.makeText(context, "Task deleted successfully!", Toast.LENGTH_SHORT).show()
+            viewModel.denyDeletion()
+        }
     }
 
     Scaffold(
@@ -79,8 +80,7 @@ fun TaskHistoryScreen(
                                         viewModel.assignTaskForDeletion(t)
                                     },
                                     onRequestDetails = onRequestDetails,
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp, vertical = 4.dp)
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                                 )
                             }
                         }
@@ -107,11 +107,11 @@ fun TaskHistoryScreen(
 fun SectionHeader(title: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.h6,
+        style = MaterialTheme.typography.headlineSmall,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp),
-        color = MaterialTheme.colors.primary
+        color = MaterialTheme.colorScheme.primary
     )
 }
 
@@ -119,8 +119,8 @@ fun SectionHeader(title: String) {
 fun EmptyTasksText() {
     Text(
         text = "No tasks available",
-        style = MaterialTheme.typography.body2,
-        color = Color.Gray,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp),

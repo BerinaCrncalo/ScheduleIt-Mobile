@@ -1,7 +1,7 @@
 package com.example.scheduleit.auth
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,7 +31,7 @@ fun ResetPwdScreen(
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Reset password", style = MaterialTheme.typography.h5)
+        Text("Reset password", style = MaterialTheme.typography.headlineSmall)
 
         OutlinedTextField(
             value = email,
@@ -49,7 +49,7 @@ fun ResetPwdScreen(
         when (state) {
             is ResetState.Error -> Text(
                 (state as ResetState.Error).message,
-                color = MaterialTheme.colors.error
+                color = MaterialTheme.colorScheme.error
             )
             ResetState.EmailSent -> {
                 Text("Email sent! Check your inbox.")

@@ -3,7 +3,7 @@ package com.example.scheduleit.auth
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +36,7 @@ fun LoginScreen(
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Log in", style = MaterialTheme.typography.h5)
+        Text("Log in", style = MaterialTheme.typography.headlineSmall)
 
         OutlinedTextField(
             value = email,
@@ -79,7 +79,7 @@ fun LoginScreen(
         when (state) {
             is AuthState.Error -> Text(
                 text = (state as AuthState.Error).message,
-                color = MaterialTheme.colors.error,
+                color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.fillMaxWidth()
             )
             AuthState.Loading -> Box(

@@ -5,10 +5,11 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.People
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScheduleItTopAppBar(
     title: String = "ScheduleIt",
@@ -19,23 +20,48 @@ fun ScheduleItTopAppBar(
     onCollabClick: () -> Unit
 ) {
     TopAppBar(
-        title = { Text("ScheduleIt", color = Color.White) },
+        title = {
+            Text(
+                text = title,
+                color = Color.White
+            )
+        },
         navigationIcon = {
-            IconButton(onClick = onNavigateHome) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+            if (canNavigateBack) {
+                IconButton(onClick = onNavigateHome) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Go back",
+                        tint = Color.White
+                    )
+                }
             }
         },
         actions = {
             IconButton(onClick = onViewDate) {
-                Icon(Icons.Default.DateRange, contentDescription = "Date", tint = Color.White)
+                Icon(
+                    imageVector = Icons.Filled.DateRange,
+                    contentDescription = "View date",
+                    tint = Color.White
+                )
             }
             IconButton(onClick = onProfileClick) {
-                Icon(Icons.Default.AccountCircle, contentDescription = "Profile", tint = Color.White)
+                Icon(
+                    imageVector = Icons.Filled.AccountCircle,
+                    contentDescription = "Profile",
+                    tint = Color.White
+                )
             }
             IconButton(onClick = onCollabClick) {
-                Icon(Icons.Filled.People, contentDescription = "Collaboration")
+                Icon(
+                    imageVector = Icons.Filled.People,
+                    contentDescription = "Collaboration",
+                    tint = Color.White
+                )
             }
         },
-        backgroundColor = Color(0xFF320064)
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF320064)
+        )
     )
 }

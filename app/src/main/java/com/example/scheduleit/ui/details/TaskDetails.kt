@@ -1,7 +1,7 @@
 package com.example.scheduleit.ui.details
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +22,7 @@ object ScheduleItDetailsDestination {
     fun createRoute(taskId: Int): String = "$route/$taskId"
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskDetailScreen(
     taskId: Int,
@@ -31,25 +32,24 @@ fun TaskDetailScreen(
     val task = viewModel.tasks.find { it.id == taskId }
 
     if (task == null) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentAlignment = Alignment.Center
         ) {
-            Text("Task not found", style = MaterialTheme.typography.h6)
+            Text("Task not found", style = MaterialTheme.typography.titleMedium)
         }
         return
     }
 
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
     var showCompletionMessage by remember { mutableStateOf(false) }
 
     val dateString = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(task.date)
 
     Scaffold(
-        scaffoldState = scaffoldState
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -57,16 +57,16 @@ fun TaskDetailScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            Text("Task Details", style = MaterialTheme.typography.h6)
+            Text("Task Details", style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Title: ${task.title}", style = MaterialTheme.typography.body1)
+            Text("Title: ${task.title}", style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text("Description: ${task.description}", style = MaterialTheme.typography.body2)
+            Text("Description: ${task.description}", style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text("Due Date: $dateString", style = MaterialTheme.typography.body2)
+            Text("Due Date: $dateString", style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(24.dp))
 
             // Complete Task
@@ -98,7 +98,7 @@ fun TaskDetailScreen(
                     navController.popBackStack()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
             ) {
                 Text("Delete Task", color = Color.White)
             }
@@ -107,7 +107,7 @@ fun TaskDetailScreen(
         // Show Snackbar after completion
         if (showCompletionMessage) {
             LaunchedEffect(Unit) {
-                scaffoldState.snackbarHostState.showSnackbar("Successfully completed, congratulations! 🎉")
+                snackbarHostState.showSnackbar("Successfully completed, congratulations! 🎉")
                 showCompletionMessage = false
             }
         }

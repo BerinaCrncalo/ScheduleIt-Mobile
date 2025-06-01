@@ -1,12 +1,11 @@
 package com.example.scheduleit.ui.info
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +26,6 @@ object InfoDestination : NavigationDestination {
     override val icon = Icons.Default.Info
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun InfoScreen(
     onNavigateHome: () -> Unit = {},
@@ -56,11 +54,12 @@ fun InfoScreen(
                 onLogoutClick = onLogoutClick
             )
         }
-    ) {
+    ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFF2F0F5)),
+                .background(Color(0xFFF2F0F5))
+                .padding(paddingValues),
             contentAlignment = Alignment.Center
         ) {
             Column(
@@ -74,21 +73,21 @@ fun InfoScreen(
                 Text(
                     text = "Meet the Team",
                     fontSize = 24.sp,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.headlineSmall,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Text(
                     text = "Berina Crnčalo, Orhan Teletović, Faris Isaković",
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Text(
                     text = "ScheduleIt is a modern productivity and wellness planner app, developed as a final project for the Mobile Programming course.",
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )

@@ -3,9 +3,7 @@ package com.example.scheduleit.ui.home
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,19 +14,20 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.scheduleit.R
-import com.example.scheduleit.ui.navigation.NavigationDestination
 import com.example.scheduleit.ui.navigation.BottomNavigationBar
-
+import com.example.scheduleit.ui.navigation.ScheduleItTopAppBar
 
 /**
  * Navigation-destination object for the Home screen.
  */
-object HomeDestination : NavigationDestination {
-    override val route: String = "home"
-    override val titleRes: Int = R.string.home_top_bar
-    override val icon = Icons.Default.Home
+object HomeDestination {
+    const val route: String = "home"
+    val titleRes: Int = R.string.home_top_bar
 }
 
+/**
+ * HomeScreen composable
+ */
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -47,33 +46,16 @@ fun HomeScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("Hello User!", fontSize = 28.sp, fontWeight = FontWeight.Bold)
-            Text("📅", fontSize = 28.sp)
-        }
+        ScheduleItTopAppBar(
+            title = "Hello User!",
+            canNavigateBack = false,
+            onNavigateHome = { /* No back navigation from home screen */ },
+            onViewDate = { navController.navigate("calendar") },
+            onProfileClick = { navController.navigate("profile") },
+            onCollabClick = { navController.navigate("collaboration") }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Top Buttons
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Button(onClick = { /* View date logic */ }) {
-                Text("📅 View date")
-            }
-            if (tasks.isNotEmpty()) {
-                Button(onClick = { /* View tasks logic */ }) {
-                    Text("📋 Tasks")
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         // Task List or Add Task
         if (tasks.isEmpty()) {
@@ -89,16 +71,18 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(12.dp))
             AddTaskCard(onClick = navigateToAddTask)
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = { viewModel.clearTasks() }) {
             Text("🧹 Clear All")
         }
 
-
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         FloatingActionButton(
-            onClick = { /* AI interaction */ },
-            backgroundColor = Color.White,
+            onClick = { navController.navigate("aiscreen") },
+            containerColor = Color.White,
             modifier = Modifier
                 .size(56.dp)
                 .align(Alignment.End)
@@ -107,11 +91,13 @@ fun HomeScreen(
             Text("AI")
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
         // Mindfulness Card
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
-            backgroundColor = Color(0xFF6A4FB6)
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF6A4FB6))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
@@ -125,16 +111,12 @@ fun HomeScreen(
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(16.dp))
 
         BottomNavigationBar(
-            onCustomizeClick = { navController.navigate("customize") },
-            onRemindersClick = { navController.navigate("reminders") },
-            onLogoutClick = {
-                navController.navigate("login") {
-                    popUpTo("home") { inclusive = true }
-                }
-            }
+            onCustomizeClick = onCustomizeClick,
+            onRemindersClick = onRemindersClick,
+            onLogoutClick = onLogoutClick
         )
     }
 }
@@ -147,7 +129,7 @@ fun AddTaskCard(onClick: () -> Unit) {
             .padding(vertical = 8.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
-        backgroundColor = Color(0xFF6A4FB6)
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF6A4FB6))
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -166,7 +148,7 @@ fun TaskCard(task: Task, onRemove: () -> Unit, onClick: () -> Unit) {
             .padding(vertical = 8.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
-        backgroundColor = Color(0xFF6A4FB6)
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF6A4FB6))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(

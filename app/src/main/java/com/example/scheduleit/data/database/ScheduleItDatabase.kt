@@ -8,6 +8,13 @@ import androidx.room.TypeConverters
 import com.example.scheduleit.data.dao.*
 import com.example.scheduleit.data.models.*
 import com.example.scheduleit.data.converter.DateTimeConverters
+import com.example.scheduleit.data.models.Task
+import com.example.scheduleit.data.models.Reminder
+import com.example.scheduleit.data.models.Expense
+import com.example.scheduleit.data.models.Comment
+import com.example.scheduleit.data.models.AIChatBot
+import com.example.scheduleit.data.models.UserProfile
+
 
 @Database(
     entities = [

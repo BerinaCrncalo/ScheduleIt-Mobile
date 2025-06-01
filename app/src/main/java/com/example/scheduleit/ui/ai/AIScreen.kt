@@ -6,7 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.scheduleit.ui.navigation.BottomNavigationBar
+import com.example.scheduleit.ui.navigation.ScheduleItTopAppBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AIScreen(
@@ -33,6 +35,16 @@ fun AIScreen(
     var userQuestion by remember { mutableStateOf("") }
 
     Scaffold(
+        topBar = {
+            ScheduleItTopAppBar(
+                title = "AI ChatBot",
+                canNavigateBack = false,
+                onNavigateHome = {}, // no back button behavior needed here, or implement if needed
+                onViewDate = onViewDateClick,
+                onProfileClick = onCloseClick,  // using close icon as profile button here
+                onCollabClick = onCollaborationClick
+            )
+        },
         bottomBar = {
             BottomNavigationBar(
                 onCustomizeClick = onCustomizeClick,
@@ -47,31 +59,15 @@ fun AIScreen(
                 .padding(paddingValues)
                 .padding(20.dp)
         ) {
-            // Top navigation row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Button(onClick = onViewDateClick) {
-                    Text("View date")
-                }
-                Button(onClick = onCollaborationClick) {
-                    Text("👥")
-                }
-                Text("📋", fontSize = 24.sp)
-            }
-
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Purple AI Chatbot Box
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF5E4AE3), RoundedCornerShape(16.dp))
-                    .padding(16.dp)
+            Surface(
+                tonalElevation = 4.dp,
+                shape = RoundedCornerShape(16.dp),
+                color = Color(0xFF5E4AE3),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column {
+                Column(modifier = Modifier.padding(16.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -103,9 +99,20 @@ fun AIScreen(
                     OutlinedTextField(
                         value = userQuestion,
                         onValueChange = { userQuestion = it },
-                        label = { Text("Enter question for AIChatBot") },
-                        modifier = Modifier.fillMaxWidth()
+                        label = { Text("Enter question for AIChatBot", color = Color.White) },
+                        placeholder = { Text("Enter question for AIChatBot", color = Color.White.copy(alpha = 0.7f)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Color.White,
+                            unfocusedBorderColor = Color.White,
+                            cursorColor = Color.White,
+                            focusedLabelColor = Color.White,
+                            unfocusedLabelColor = Color.White
+                        ),
+                        textStyle = LocalTextStyle.current.copy(color = Color.White),
+                        singleLine = true
                     )
+
 
                     Spacer(modifier = Modifier.height(10.dp))
 

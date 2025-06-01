@@ -3,8 +3,7 @@ package com.example.scheduleit.ui.tasks
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -23,7 +22,7 @@ fun TaskScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text("Tasks", style = MaterialTheme.typography.h4)
+        Text("Tasks", style = MaterialTheme.typography.headlineLarge)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -32,6 +31,7 @@ fun TaskScreen(
                 val task = viewModel.tasks[index]
                 Text(
                     text = task.title,
+                    style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -50,7 +50,7 @@ fun TaskScreen(
             onClick = { navController.navigate("add_task") },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(Icons.Default.Add, contentDescription = "Add Task")
+            Icon(Icons.Filled.Add, contentDescription = "Add Task")
             Spacer(modifier = Modifier.width(8.dp))
             Text("Add New Task")
         }

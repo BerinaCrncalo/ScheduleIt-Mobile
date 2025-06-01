@@ -1,31 +1,29 @@
 package com.example.scheduleit.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 
-private val LightColorPalette = lightColors(
+private val LightColorScheme = lightColorScheme(
     primary = LightPrimary,
-    primaryVariant = LightPrimaryVariant,
-    secondary = LightSecondary,
-    background = LightBackground,
-    surface = LightSurface,
     onPrimary = LightOnPrimary,
+    secondary = LightSecondary,
     onSecondary = LightOnSecondary,
+    background = LightBackground,
     onBackground = LightOnBackground,
-    onSurface = LightOnSurface
+    surface = LightSurface,
+    onSurface = LightOnSurface,
 )
 
-private val DarkColorPalette = darkColors(
+private val DarkColorScheme = darkColorScheme(
     primary = DarkPrimary,
-    primaryVariant = DarkPrimaryVariant,
-    secondary = DarkSecondary,
-    background = DarkBackground,
-    surface = DarkSurface,
     onPrimary = DarkOnPrimary,
+    secondary = DarkSecondary,
     onSecondary = DarkOnSecondary,
+    background = DarkBackground,
     onBackground = DarkOnBackground,
-    onSurface = DarkOnSurface
+    surface = DarkSurface,
+    onSurface = DarkOnSurface,
 )
 
 @Composable
@@ -33,12 +31,11 @@ fun ScheduleItTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) DarkColorPalette else LightColorPalette
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colorScheme,
         typography = Typography,
-        shapes = Shapes(),
         content = content
     )
 }

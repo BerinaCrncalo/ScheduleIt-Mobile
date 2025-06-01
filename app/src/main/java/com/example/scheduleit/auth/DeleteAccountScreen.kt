@@ -1,7 +1,7 @@
 package com.example.scheduleit.auth
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,18 +31,18 @@ fun DeleteAccountScreen(navController: NavController) {
     ) {
         Text(
             text = "Delete Account",
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.headlineSmall
         )
         Text(
             text = "Are you sure you want to delete your account? This action cannot be undone.",
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.bodyLarge
         )
 
         errorMessage?.let { error ->
             Text(
                 text = error,
-                color = MaterialTheme.colors.error,
-                style = MaterialTheme.typography.body1
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyLarge
             )
         }
 
@@ -51,7 +51,7 @@ fun DeleteAccountScreen(navController: NavController) {
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .size(48.dp),
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colorScheme.primary
             )
         } else {
             Row(
